@@ -29,11 +29,17 @@ while running:
     # fill the screen with a color to wipe away anything from last frame
     screen.fill(WHITE)
 
-    # Draw a box
+    # Draw boxes left side
     pygame.draw.rect(screen, BLUE, (100, 100, w/2-200, 100), width=1)
     pygame.draw.rect(screen, BLUE, (100, 250, w/2-200, 100), width=1)
     pygame.draw.rect(screen, BLUE, (100, 400, w/2-200, 100), width=1)
     pygame.draw.rect(screen, BLUE, (100, 550, w/2-200, 100), width=1)
+
+    # Draw boxes right side 
+    pygame.draw.rect(screen, BLUE, (w/2+100, 100, w/2-200, 100), width=1)
+    pygame.draw.rect(screen, BLUE, (w/2+100, 250, w/2-200, 100), width=1)
+    pygame.draw.rect(screen, BLUE, (w/2+100, 400, w/2-200, 100), width=1)
+    pygame.draw.rect(screen, BLUE, (w/2+100, 550, w/2-200, 100), width=1)
 
     # flip() the display to put your work on screen
     pygame.display.flip()
