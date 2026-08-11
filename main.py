@@ -3,23 +3,10 @@ import sys
 from dashboard.app import Dashboard
 
 if __name__ == "__main__":
-    Dashboard.run()
+    Dashboard().run()
 
-# pygame setup
-pygame.init()
 
-# window size
-w = 1280
-h = 720
-
-# setup window
-screen = pygame.display.set_mode((w, h))
 pygame.display.set_caption("Draw a Box")
-
-# define colors
-WHITE = (255, 255, 255)
-BLUE = (0, 0, 255)
-BLACK = (0, 0, 0)
 
 #Progress bar config
 start_time=pygame.time.get_ticks()
@@ -37,14 +24,6 @@ rect_list = [
     pygame.Rect(WIDTH/2+100, 550, WIDTH/2-200, 100),
 ]
 
-def progress_bar():
-    # calculate progress
-    current_time = pygame.time.get_ticks()
-    elapsed_time = current_time - start_time
-    progress_ratio=min(elapsed_time / TOTAL_DURATION, 1)
-    progress_width = progress_ratio * (WIDTH/2 - 200)
-    # draw rectangle
-    pygame.draw.rect(screen, BLUE, (100, 100, progress_width, 100), border_radius=20)
 
 # dashboard loop
 running = True
