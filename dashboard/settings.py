@@ -8,3 +8,6 @@ HEIGHT = 720
 WHITE = (255, 255, 255)
 BLUE = (0, 0, 255)
 BLACK = (0, 0, 0)
+
+# Progress bar config 
+TOTAL_DURATION = 5000 # 5 seconds
