@@ -1,5 +1,9 @@
 import pygame
 import sys
+from dashboard.app import Dashboard
+
+if __name__ == "__main__":
+    Dashboard.run()
 
 # pygame setup
 pygame.init()
@@ -23,14 +27,14 @@ TOTAL_DURATION = 5000 # 5 seconds
 
 # rectangle list
 rect_list = [
-    pygame.Rect(100, 100, w/2-200, 100),
-    pygame.Rect(100, 250, w/2-200, 100),
-    pygame.Rect(100, 400, w/2-200, 100),
-    pygame.Rect(100, 550, w/2-200, 100),
-    pygame.Rect(w/2+100, 100, w/2-200, 100),
-    pygame.Rect(w/2+100, 250, w/2-200, 100),
-    pygame.Rect(w/2+100, 400, w/2-200, 100),
-    pygame.Rect(w/2+100, 550, w/2-200, 100),
+    pygame.Rect(100, 100, WIDTH/2-200, 100),
+    pygame.Rect(100, 250, WIDTH/2-200, 100),
+    pygame.Rect(100, 400, WIDTH/2-200, 100),
+    pygame.Rect(100, 550, WIDTH/2-200, 100),
+    pygame.Rect(WIDTH/2+100, 100, WIDTH/2-200, 100),
+    pygame.Rect(WIDTH/2+100, 250, WIDTH/2-200, 100),
+    pygame.Rect(WIDTH/2+100, 400, WIDTH/2-200, 100),
+    pygame.Rect(WIDTH/2+100, 550, WIDTH/2-200, 100),
 ]
 
 def progress_bar():
@@ -38,12 +42,9 @@ def progress_bar():
     current_time = pygame.time.get_ticks()
     elapsed_time = current_time - start_time
     progress_ratio=min(elapsed_time / TOTAL_DURATION, 1)
-    progress_width = progress_ratio * (w/2 - 200)
+    progress_width = progress_ratio * (WIDTH/2 - 200)
     # draw rectangle
     pygame.draw.rect(screen, BLUE, (100, 100, progress_width, 100), border_radius=20)
-
-#initialize rect
-rectangle = pygame.Rect(100, 100, w/2-200, 100)
 
 # dashboard loop
 running = True
@@ -70,4 +71,4 @@ while running:
 
 # Clean up and exit
 pygame.quit()
-sys.exit
+sys.exit()
