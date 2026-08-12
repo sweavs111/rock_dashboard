@@ -32,6 +32,10 @@ class Dashboard:
                 if event.type == pygame.QUIT:
                     running = False
 
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    if event.button == 1:  # 1 represents the left mouse button
+                        self.panel.detect_click(event)
+
             # fill the screen with a color to wipe away anything from last frame
             self.screen.fill(settings.WHITE)
 

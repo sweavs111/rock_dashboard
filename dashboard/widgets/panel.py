@@ -22,3 +22,10 @@ class Panel:
     def draw(self, screen):
         for rect in self.rects:
             pygame.draw.rect(screen, settings.BLACK, rect, width=1, border_radius=20)
+
+    def detect_click(self, event):
+        for index, rect in self.rects:
+            if rect.collidepoint(event.pos):
+                print(f"Rectangle at index {index} was clicked!")
+                break
+

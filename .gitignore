@@ -2,5 +2,11 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# Virtual environments
+.rock_env/
+venv/
+env/
+.venv/
+
 # Claude Code
 .claude/
