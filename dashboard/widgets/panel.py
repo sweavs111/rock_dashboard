@@ -20,8 +20,17 @@ class Panel:
             pygame.Rect(w/2+100, 550, w/2-200, 100),
         ]
     
+    def _draw_tics(self, screen, rect):
+        day = rect.width / 7
+        i = 1
+        while i < 7:
+            x_pos = rect.x + (day * i)
+            pygame.draw.line(screen, settings.BLACK, (x_pos, rect.y), (x_pos, rect.y + 10), 2)
+            i += 1
+    
     def draw(self, screen):
         for rect in self.rects:
+            self._draw_tics(screen, rect)
             pygame.draw.rect(screen, settings.BLACK, rect, width=2, border_radius=20)
 
     def detect_click(self, event):
