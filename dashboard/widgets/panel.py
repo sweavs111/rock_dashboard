@@ -1,6 +1,7 @@
 # dashboard/widgets/panel.py
 import pygame
 from .. import settings
+from . import progress_bar
 
 class Panel:
     def __init__(self):
@@ -21,11 +22,10 @@ class Panel:
     
     def draw(self, screen):
         for rect in self.rects:
-            pygame.draw.rect(screen, settings.BLACK, rect, width=1, border_radius=20)
+            pygame.draw.rect(screen, settings.BLACK, rect, width=2, border_radius=20)
 
     def detect_click(self, event):
         for index, rect in enumerate(self.rects):
             if rect.collidepoint(event.pos):
-                print(f"Rectangle at index {index} was clicked!")
-                break
-
+                return index
+        return None
