@@ -1,6 +1,8 @@
 # core pygame loop
 import pygame
 import sys
+from datetime import datetime
+from zoneinfo import ZoneInfo
 
 from . import settings
 from .widgets import panel, progress_bar
@@ -19,10 +21,11 @@ class Dashboard:
         # setup window
         self.screen = pygame.display.set_mode((settings.WIDTH, settings.HEIGHT))
         clock = pygame.time.Clock()
+        pygame.display.set_caption("Rock Dashboard")
 
         # set up progress bar
         self.progress_bar = progress_bar.ProgressBar()
-        prog_bars = [None] * len(self.panel.rects)
+        prog_bars = [() for _ in range(len(self.panel.rects))] # format is start tick, date/time
 
         # dashboard loop
         running = True
@@ -38,17 +41,15 @@ class Dashboard:
                     if event.button == 1:  # 1 represents the left mouse button
                         index = self.panel.detect_click(event)
                         if index is not None:
-                            prog_bars[index] = pygame.time.get_ticks()
+                            prog_bars[index] = (pygame.time.get_ticks(), datetime.now(ZoneInfo("America/New_York")))
 
 
             # fill the screen with a color to wipe away anything from last frame
             self.screen.fill(settings.WHITE)
-
-
             
-            for index, start_time in enumerate(prog_bars):
-                if start_time is not None:
-                    self.progress_bar.start_progress(self.screen, start_time, self.panel.rects[index])
+            for index, prog_bar in enumerate(prog_bars):
+                if len(prog_bar) > 0:
+                    self.progress_bar.start_progress(self.screen, prog_bar, self.panel.rects[index])
 
             self.panel.draw(self.screen)
 

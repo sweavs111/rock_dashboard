@@ -8,7 +8,9 @@ HEIGHT = 720
 WHITE = (255, 255, 255)
 BLUE = (0, 0, 255)
 BLACK = (0, 0, 0)
+GREEN = "#9DC209"
 
-# Progress bar config 
+# Progress bar config
 #TOTAL_DURATION = 5000 # 5 seconds
-TOTAL_DURATION = 60000 * 60 # 1 minute * 60 = 1h
+TOTAL_DURATION = 60000 * 2 # 2 minutes
+#TOTAL_DURATION = 60000 * 60 # 1 minute * 60 = 1h
