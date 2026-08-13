@@ -1,6 +1,6 @@
 # create a progress bar 
 import pygame
-from datetime import timedelta
+from datetime import datetime, timedelta
 
 from .. import settings
 
@@ -16,7 +16,7 @@ class ProgressBar:
 
         # calculate progress
         current_time = pygame.time.get_ticks()
-        elapsed_time = current_time - prog_bar[0]
+        elapsed_time = timedelta(milliseconds=current_time - prog_bar[0])
         progress_ratio=min(elapsed_time / settings.TOTAL_DURATION, 1)
         prog_rect.width = progress_ratio * prog_rect.width
         # draw rectangle
@@ -41,7 +41,7 @@ class ProgressBar:
         )
 
         # end time
-        endtime = timestamp + timedelta(milliseconds=settings.TOTAL_DURATION)
+        endtime = timestamp + settings.TOTAL_DURATION
         text_end, textRect_end = self._render_label(
             endtime, self.font, "topright", rect.right, rect
         )

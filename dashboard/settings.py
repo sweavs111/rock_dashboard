@@ -1,4 +1,5 @@
 # Global settings for the dashboard
+from datetime import timedelta
 
 # window size
 WIDTH = 1280
@@ -11,6 +12,5 @@ BLACK = (0, 0, 0)
 GREEN = "#9DC209"
 
 # Progress bar config
-#TOTAL_DURATION = 5000 # 5 seconds
-TOTAL_DURATION = 60000 * 2 # 2 minutes
-#TOTAL_DURATION = 60000 * 60 # 1 minute * 60 = 1h
+#TOTAL_DURATION = timedelta(seconds=5)
+TOTAL_DURATION = timedelta(minutes=2)
