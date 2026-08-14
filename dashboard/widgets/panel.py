@@ -25,13 +25,13 @@ class Panel:
         i = 1
         while i < 7:
             x_pos = rect.x + (day * i)
-            pygame.draw.line(screen, settings.BLACK, (x_pos, rect.y), (x_pos, rect.y + 10), 2)
+            pygame.draw.line(screen, settings.WHITE, (x_pos, rect.y), (x_pos, rect.y + 10), 2)
             i += 1
     
     def draw_rects(self, screen):
         for rect in self.rects:
             self._draw_tics(screen, rect)
-            pygame.draw.rect(screen, settings.BLACK, rect, width=2, border_radius=20)
+            pygame.draw.rect(screen, settings.WHITE, rect, width=2, border_radius=20)
 
     def detect_click(self, event):
         for index, rect in enumerate(self.rects):
@@ -40,7 +40,7 @@ class Panel:
         return None
 
     def _render_header_text(self, font, input_text):
-        text = font.render(input_text, True, settings.BLACK)
+        text = font.render(input_text, True, settings.WHITE)
         text_rect = text.get_rect()
         if input_text == "Tumble Bee":
             text_rect.center = (settings.WIDTH * 0.25, 60)

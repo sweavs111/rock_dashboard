@@ -26,7 +26,7 @@ class ProgressBar:
             pygame.draw.rect(screen, settings.GREEN, prog_rect, border_radius=20)
     
     def _render_label(self, timestamp, font, anchor_attr, anchor_x, rect):
-        text = font.render(timestamp.strftime("%a, %b %d, %I:%M %p"), True, settings.BLACK)
+        text = font.render(timestamp.strftime("%a, %b %d, %I:%M %p"), True, settings.WHITE)
         textRect = text.get_rect()
         # anchor_attr is the *name* of a Rect positioning attribute (e.g. "topleft",
         # "topright"); setattr() looks it up dynamically instead of hardcoding it,

@@ -44,7 +44,7 @@ class Dashboard:
 
 
             # fill the screen with a color to wipe away anything from last frame
-            self.screen.fill(settings.WHITE)
+            self.screen.fill(settings.GREY)
             
             for index, prog_bar in enumerate(prog_bars):
                 if len(prog_bar) > 0:
