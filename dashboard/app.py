@@ -9,8 +9,6 @@ from .widgets import panel, progress_bar
 
 class Dashboard:
     def __init__(self):
-
-        
         self.screen = None
         self.panel = panel.Panel()
 
@@ -22,6 +20,7 @@ class Dashboard:
         self.screen = pygame.display.set_mode((settings.WIDTH, settings.HEIGHT))
         clock = pygame.time.Clock()
         pygame.display.set_caption("Rock Dashboard")
+        self.header = self.panel.build_header()
 
         # set up progress bar
         self.progress_bar = progress_bar.ProgressBar()
@@ -51,7 +50,9 @@ class Dashboard:
                 if len(prog_bar) > 0:
                     self.progress_bar.start_progress(self.screen, prog_bar, self.panel.rects[index])
 
-            self.panel.draw(self.screen)
+            self.panel.draw_rects(self.screen)
+
+            self.panel.draw_header(self.screen)
 
             # flip() the display to put your work on screen
             pygame.display.flip()

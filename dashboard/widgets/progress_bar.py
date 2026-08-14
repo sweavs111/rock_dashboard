@@ -6,7 +6,7 @@ from .. import settings
 
 class ProgressBar:
     def __init__(self):
-        self.font = pygame.font.Font(None, 25)
+        self.font = pygame.font.SysFont("Arial", 20)
     def start_progress(self, screen, prog_bar, rect):
         # make a new rectangle for the progress bar
         prog_rect = rect.copy()
