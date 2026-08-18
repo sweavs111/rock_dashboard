@@ -21,6 +21,9 @@ class Dashboard:
         clock = pygame.time.Clock()
         pygame.display.set_caption("Rock Dashboard")
         self.header = self.panel.build_header()
+        
+        # setup controller support
+        pygame.joystick.init()
 
         # set up progress bar
         self.progress_bar = progress_bar.ProgressBar()
