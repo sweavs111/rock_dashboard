@@ -39,7 +39,7 @@ class Panel:
         for index, prog_bar in enumerate(self.prog_bars):
             if len(prog_bar) > 0:
                 self.progress_bar.start_progress(screen, prog_bar, self.rects[index])
-                
+
         # Draw all rectangles
         for index, rect in enumerate(self.rects):
             self._draw_tics(screen, rect)
@@ -98,4 +98,4 @@ class Panel:
                 else:
                     self.rect_index += 2
             case pygame.K_RETURN:
-                    self.prog_bars[self.rect_index] = (pygame.time.get_ticks(), datetime.now(ZoneInfo("America/New_York")))
+                self.prog_bars[self.rect_index] = (pygame.time.get_ticks(), datetime.now(ZoneInfo("America/New_York")))

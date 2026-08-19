@@ -19,7 +19,7 @@ class Dashboard:
         self.screen = pygame.display.set_mode((settings.WIDTH, settings.HEIGHT))
         clock = pygame.time.Clock()
         pygame.display.set_caption("Rock Dashboard")
-        self.header = self.panel.build_header()
+        self.panel.build_header()
         
         # setup controller support
         pygame.joystick.init()
