@@ -11,6 +11,7 @@ BLUE = (0, 0, 255)
 BLACK = (0, 0, 0)
 GREEN = "#9DC209"
 GREY = "#222021"
+RED = "#D0312D"
 
 # Progress bar config
 #TOTAL_DURATION = timedelta(seconds=5)
