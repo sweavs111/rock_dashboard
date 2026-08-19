@@ -14,6 +14,12 @@ class Panel:
         self.prog_bars = [() for _ in range(len(self.rects))] # format is start tick, date/time
 
     def _build_rects(self):
+        # this order makes the indexes of the rectangles
+        # 0 1
+        # 2 3
+        # 4 5
+        # 6 7
+        # Makes the hard-coded index hopping via key presses work
         w = settings.WIDTH
         return [
             pygame.Rect(50, 150, w/2-200, 100),
