@@ -9,9 +9,13 @@ from . import progress_bar
 
 @dataclass
 class ProgressEntry:
-    start_tick: int
+    start_tick: timedelta
     start_timestamp: datetime
-    endtime: datetime
+    elapsed_time: timedelta = timedelta()
+    current_pausetime: timedelta = timedelta(0)
+    total_pausetime: timedelta = timedelta(0)
+    pause_tick: datetime = None
+    endtime: datetime = None
     paused: bool = False
     finish: bool = False
 
@@ -52,7 +56,7 @@ class Panel:
     def draw_rects(self, screen):
         # draw the ongoing progress bars
         for index, prog_bar in enumerate(self.prog_bars):
-            if len(prog_bar) > 0:
+            if prog_bar is not None:
                 self.progress_bar.start_progress(screen, prog_bar, self.rects[index])
 
         # Draw all rectangles
@@ -115,11 +119,16 @@ class Panel:
             case pygame.K_RETURN:
                 if self.prog_bars[self.rect_index] is None: # if theres no entry create a new one
                      self.prog_bars[self.rect_index] = ProgressEntry(
-                         start_tick=pygame.time.get_ticks(),
-                         timestamp=datetime.now(ZoneInfo("America/New_York"))
+                         start_tick=timedelta(milliseconds=pygame.time.get_ticks()),
+                         start_timestamp=datetime.now(ZoneInfo("America/New_York"))
                          )
-                     self.prog_bars[self.rect_index].endtime = self.prog_bars[self.rect_index].start_tick = timedelta(milliseconds=settings.TOTAL_DURATION)
+                     self.prog_bars[self.rect_index].endtime = self.prog_bars[self.rect_index].start_tick + settings.TOTAL_DURATION
                 elif not self.prog_bars[self.rect_index].paused and not self.prog_bars[self.rect_index].finish: #if the progress bar isn't paused and isn't finished, pause it
                     self.prog_bars[self.rect_index].paused = True
+                    self.prog_bars[self.rect_index].pause_tick = timedelta(milliseconds=pygame.time.get_ticks())
+                elif self.prog_bars[self.rect_index].paused and not self.prog_bars[self.rect_index].finish: # if the progress bar just got unpaused, reset the start tick
+                    self.prog_bars[self.rect_index].total_pausetime += self.prog_bars[self.rect_index].current_pausetime
+                    self.prog_bars[self.rect_index].pause_tick = None
+                    self.prog_bars[self.rect_index].paused = False
             case pygame.K_BACKSPACE:
                 self.prog_bars[self.rect_index] = None
