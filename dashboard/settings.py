@@ -7,12 +7,12 @@ HEIGHT = 720
 
 # define colors
 WHITE = "#FFF6EA"
-BLUE = (0, 0, 255)
+BLUE = "#3d3bb0"
 BLACK = (0, 0, 0)
-GREEN = "#9DC209"
+GREEN = "#407d49"
 GREY = "#222021"
-RED = "#D0312D"
+RED = "#941A18"
 
 # Progress bar config
-#TOTAL_DURATION = timedelta(seconds=5)
-TOTAL_DURATION = timedelta(minutes=2)
+TOTAL_DURATION = timedelta(seconds=5)
+#TOTAL_DURATION = timedelta(minutes=2)
