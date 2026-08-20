@@ -1,17 +1,26 @@
 # dashboard/widgets/panel.py
 import pygame
-from datetime import datetime
+from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
+from dataclasses import dataclass
 
 from .. import settings
 from . import progress_bar
+
+@dataclass
+class ProgressEntry:
+    start_tick: int
+    start_timestamp: datetime
+    endtime: datetime
+    paused: bool = False
+    finish: bool = False
 
 class Panel:
     def __init__(self):
         self.rects = self._build_rects()
         self.rect_index = 0
         self.progress_bar = progress_bar.ProgressBar()
-        self.prog_bars = [() for _ in range(len(self.rects))] # format is start tick, date/time
+        self.prog_bars: list[ProgressEntry | None] = [None] * len(self.rects)
 
     def _build_rects(self):
         # this order makes the indexes of the rectangles
@@ -104,4 +113,13 @@ class Panel:
                 else:
                     self.rect_index += 2
             case pygame.K_RETURN:
-                self.prog_bars[self.rect_index] = (pygame.time.get_ticks(), datetime.now(ZoneInfo("America/New_York")))
+                if self.prog_bars[self.rect_index] is None: # if theres no entry create a new one
+                     self.prog_bars[self.rect_index] = ProgressEntry(
+                         start_tick=pygame.time.get_ticks(),
+                         timestamp=datetime.now(ZoneInfo("America/New_York"))
+                         )
+                     self.prog_bars[self.rect_index].endtime = self.prog_bars[self.rect_index].start_tick = timedelta(milliseconds=settings.TOTAL_DURATION)
+                elif not self.prog_bars[self.rect_index].paused and not self.prog_bars[self.rect_index].finish: #if the progress bar isn't paused and isn't finished, pause it
+                    self.prog_bars[self.rect_index].paused = True
+            case pygame.K_BACKSPACE:
+                self.prog_bars[self.rect_index] = None

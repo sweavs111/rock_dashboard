@@ -15,10 +15,12 @@ class ProgressBar:
         self._write_timestamps(screen, prog_bar[1], rect)
 
         # calculate progress
-        current_time = pygame.time.get_ticks()
-        elapsed_time = timedelta(milliseconds=current_time - prog_bar[0])
-        progress_ratio=min(elapsed_time / settings.TOTAL_DURATION, 1)
-        prog_rect.width = progress_ratio * prog_rect.width
+        if not prog_bar[2]:    
+            current_time = pygame.time.get_ticks()
+            elapsed_time = timedelta(milliseconds=current_time - prog_bar[0])
+            progress_ratio=min(elapsed_time / settings.TOTAL_DURATION, 1)
+            prog_rect.width = progress_ratio * prog_rect.width
+        
         # draw rectangle
         if prog_rect.width < rect.width:
             pygame.draw.rect(screen, settings.BLUE, prog_rect, border_radius=20)
