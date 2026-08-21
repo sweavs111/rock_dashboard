@@ -128,6 +128,7 @@ class Panel:
                     self.prog_bars[self.rect_index].pause_tick = timedelta(milliseconds=pygame.time.get_ticks())
                 elif self.prog_bars[self.rect_index].paused and not self.prog_bars[self.rect_index].finish: # if the progress bar just got unpaused, reset the start tick
                     self.prog_bars[self.rect_index].total_pausetime += self.prog_bars[self.rect_index].current_pausetime
+                    self.prog_bars[self.rect_index].current_pausetime = timedelta(0)
                     self.prog_bars[self.rect_index].pause_tick = None
                     self.prog_bars[self.rect_index].paused = False
             case pygame.K_BACKSPACE:
