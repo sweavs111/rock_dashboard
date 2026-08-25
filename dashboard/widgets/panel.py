@@ -6,9 +6,11 @@ from dataclasses import dataclass
 
 from .. import settings
 from . import progress_bar
+from .symbols import Wash
 
 @dataclass
 class ProgressEntry:
+    rect: pygame.Rect
     start_tick: timedelta
     start_timestamp: datetime
     elapsed_time: timedelta = timedelta()
@@ -18,6 +20,8 @@ class ProgressEntry:
     endtime: datetime = None
     paused: bool = False
     finish: bool = False
+    washing: bool = False
+    current_wash = Wash
 
 class Panel:
     def __init__(self):
@@ -131,5 +135,8 @@ class Panel:
                     self.prog_bars[self.rect_index].current_pausetime = timedelta(0)
                     self.prog_bars[self.rect_index].pause_tick = None
                     self.prog_bars[self.rect_index].paused = False
+                elif self.prog_bars[self.rect_index].finish:
+                    self.prog_bars[self.rect_index].washing = True
+                    self.prog_bars[self.rect_index].current_wash.wash_start = timedelta(milliseconds=pygame.time.get_ticks())
             case pygame.K_BACKSPACE:
                 self.prog_bars[self.rect_index] = None

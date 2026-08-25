@@ -3,17 +3,18 @@ import pygame
 from datetime import datetime, timedelta
 
 from .. import settings
+from . import symbols
 
 class ProgressBar:
     def __init__(self):
-        self.font = pygame.font.SysFont("Arial", 20)
+        self.font_timestamp = pygame.font.SysFont("Arial", 20)
+        self.font_notification = pygame.font.SysFont("Arial", 40)
+        self.symbols = symbols.Symbols()
     def start_progress(self, screen, prog_bar, rect):
         # make a new rectangle for the progress bar
         prog_rect = rect.copy()
 
         current_time = timedelta(milliseconds=pygame.time.get_ticks())
-        if prog_bar.paused:
-            prog_bar.current_pausetime = current_time - prog_bar.pause_tick
 
         # calculate progress if not finished
         if not prog_bar.finish:
@@ -29,6 +30,14 @@ class ProgressBar:
             pygame.draw.rect(screen, settings.BLUE, prog_rect, border_radius=20)
         else:
             pygame.draw.rect(screen, settings.GREEN, prog_rect, border_radius=20)
+            if not prog_bar.washing:
+                self._render_notification(screen, "START WASH?", rect)
+            else:
+                symbols.wash_step(screen, prog_bar)
+
+        if prog_bar.paused:
+            prog_bar.current_pausetime = current_time - prog_bar.pause_tick
+            self._render_notification(screen, "PAUSED", rect)
 
         #write timestamps
         self._write_timestamps(screen, prog_bar, rect)
@@ -45,14 +54,19 @@ class ProgressBar:
     def _write_timestamps(self, screen, prog_bar, rect):
         # start time
         text_start, textRect_start = self._render_label(
-            prog_bar.start_timestamp, self.font, "topleft", rect.left, rect
+            prog_bar.start_timestamp, self.font_timestamp, "topleft", rect.left, rect
         )
 
         # end time
         text_end, textRect_end = self._render_label(
-            prog_bar.end_timestamp, self.font, "topright", rect.right, rect
+            prog_bar.end_timestamp, self.font_timestamp, "topright", rect.right, rect
         )
 
         # draw timestamps
         screen.blits(((text_start, textRect_start), (text_end, textRect_end)))
 
+    def _render_notification(self, screen, text, rect):
+        notification_text = self.font_notification.render(text, True, settings.WHITE)
+        notification_text_rect = notification_text.get_rect()
+        notification_text_rect.center = rect.center
+        screen.blit(notification_text, notification_text_rect)
