@@ -3,13 +3,13 @@ import pygame
 from datetime import datetime, timedelta
 
 from .. import settings
-from . import symbols
+from .symbols import Symbols
 
 class ProgressBar:
     def __init__(self):
         self.font_timestamp = pygame.font.SysFont("Arial", 20)
         self.font_notification = pygame.font.SysFont("Arial", 40)
-        self.symbols = symbols.Symbols()
+        self.symbols = Symbols()
     def start_progress(self, screen, prog_bar, rect):
         # make a new rectangle for the progress bar
         prog_rect = rect.copy()
@@ -33,7 +33,8 @@ class ProgressBar:
             if not prog_bar.washing:
                 self._render_notification(screen, "START WASH?", rect)
             else:
-                symbols.wash_step(screen, prog_bar)
+                self._render_notification(screen, "WASHING...", rect)
+                self.symbols.wash_step(screen, prog_bar)
 
         if prog_bar.paused:
             prog_bar.current_pausetime = current_time - prog_bar.pause_tick

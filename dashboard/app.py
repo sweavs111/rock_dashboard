@@ -13,12 +13,12 @@ class Dashboard:
     def run(self):
         pygame.init()
 
-        self.panel = panel.Panel()
-
         # setup window
         self.screen = pygame.display.set_mode((settings.WIDTH, settings.HEIGHT))
         clock = pygame.time.Clock()
         pygame.display.set_caption("Rock Dashboard")
+
+        self.panel = panel.Panel()
         self.panel.build_header()
         
         # setup controller support

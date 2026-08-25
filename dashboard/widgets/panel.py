@@ -6,7 +6,6 @@ from dataclasses import dataclass
 
 from .. import settings
 from . import progress_bar
-from .symbols import Wash
 
 @dataclass
 class ProgressEntry:
@@ -21,7 +20,7 @@ class ProgressEntry:
     paused: bool = False
     finish: bool = False
     washing: bool = False
-    current_wash = Wash
+    wash_start = timedelta
 
 class Panel:
     def __init__(self):
@@ -123,9 +122,10 @@ class Panel:
             case pygame.K_RETURN:
                 if self.prog_bars[self.rect_index] is None: # if theres no entry create a new one
                      self.prog_bars[self.rect_index] = ProgressEntry(
+                         rect=self.rects[self.rect_index],
                          start_tick=timedelta(milliseconds=pygame.time.get_ticks()),
                          start_timestamp=datetime.now(ZoneInfo("America/New_York"))
-                         )
+                    )
                      self.prog_bars[self.rect_index].endtime = self.prog_bars[self.rect_index].start_tick + settings.TOTAL_DURATION
                 elif not self.prog_bars[self.rect_index].paused and not self.prog_bars[self.rect_index].finish: #if the progress bar isn't paused and isn't finished, pause it
                     self.prog_bars[self.rect_index].paused = True
@@ -137,6 +137,6 @@ class Panel:
                     self.prog_bars[self.rect_index].paused = False
                 elif self.prog_bars[self.rect_index].finish:
                     self.prog_bars[self.rect_index].washing = True
-                    self.prog_bars[self.rect_index].current_wash.wash_start = timedelta(milliseconds=pygame.time.get_ticks())
+                    self.prog_bars[self.rect_index].wash_start = timedelta(milliseconds=pygame.time.get_ticks())
             case pygame.K_BACKSPACE:
                 self.prog_bars[self.rect_index] = None
