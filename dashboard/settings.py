@@ -5,6 +5,8 @@ from datetime import timedelta
 WIDTH = 1280
 HEIGHT = 720
 
+ICON_SIZE = 100
+
 # define colors
 WHITE = "#FFF6EA"
 BLUE = "#3d3bb0"

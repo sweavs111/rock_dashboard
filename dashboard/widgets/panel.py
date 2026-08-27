@@ -1,11 +1,15 @@
 # dashboard/widgets/panel.py
 import pygame
+import os
+import sys
 from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 from dataclasses import dataclass
 
 from .. import settings
 from . import progress_bar
+
+ASSETS_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "..", "assets")
 
 @dataclass
 class ProgressEntry:
@@ -28,6 +32,7 @@ class Panel:
         self.rect_index = 0
         self.progress_bar = progress_bar.ProgressBar()
         self.prog_bars: list[ProgressEntry | None] = [None] * len(self.rects)
+        self._load_pictures()
 
     def _build_rects(self):
         # this order makes the indexes of the rectangles
@@ -83,15 +88,26 @@ class Panel:
         text_rect = text.get_rect()
         if input_text == "Tumble Bee":
             text_rect.center = (settings.WIDTH * 0.25, 60)
+            self.bee_rect1.midright = (text_rect.left-20, text_rect.centery)
+            self.bee_rect2.midleft = (text_rect.right+20, text_rect.centery)
         else:
             text_rect.center = (settings.WIDTH * 0.75, 60)
+            self.rock_rect1.midright = (text_rect.left-20, text_rect.centery)
+            self.rock_rect2.midleft = (text_rect.right+20, text_rect.centery)
         return (text, text_rect)
 
     def build_header(self):
-         self.header = []
-         self.font = pygame.font.SysFont("Arial", 50)
-         for input_text in ["Tumble Bee", "Lortone"]:
-            self.header.append(self._render_header_text(self.font, input_text))
+        self.header = []
+        self.font = pygame.font.SysFont("Arial", 50)
+        for input_text in ["Tumble Bee", "Lortone"]:
+           self.header.append(self._render_header_text(self.font, input_text))
+        icon_header = (
+            (self.bee_icon, self.bee_rect1),
+            (self.bee_icon, self.bee_rect2),
+            (self.rock_icon, self.rock_rect1),
+            (self.rock_icon, self.rock_rect2),
+        )
+        self.header += icon_header
 
 
     def draw_header(self, screen):
@@ -140,3 +156,21 @@ class Panel:
                     self.prog_bars[self.rect_index].wash_start = timedelta(milliseconds=pygame.time.get_ticks())
             case pygame.K_BACKSPACE:
                 self.prog_bars[self.rect_index] = None
+
+    def _load_pictures(self):
+        try:
+            bee_icon = pygame.image.load(os.path.join(ASSETS_DIR, "bee.png")).convert_alpha()
+        except pygame.error:
+            print("could not load bee image: make sure file path is correct.")
+            sys.exit()
+        self.bee_icon = pygame.transform.scale(bee_icon, (settings.ICON_SIZE, settings.ICON_SIZE))
+        self.bee_rect1 = self.bee_icon.get_rect()
+        self.bee_rect2 = self.bee_rect1.copy()
+        try:
+            rock_icon = pygame.image.load(os.path.join(ASSETS_DIR, "rock.png")).convert_alpha()
+        except pygame.error:
+            print("could not load bee image: make sure file path is correct.")
+            sys.exit()
+        self.rock_icon = pygame.transform.scale(rock_icon, (settings.ICON_SIZE, settings.ICON_SIZE))
+        self.rock_rect1 = self.rock_icon.get_rect()
+        self.rock_rect2 = self.rock_rect1.copy()

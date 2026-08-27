@@ -16,7 +16,7 @@ class Symbols:
         except pygame.error:
             print("could not load image: make sure file path is correct.")
             sys.exit()
-        self.soap_icon = pygame.transform.scale(soap_icon, (100, 100))
+        self.soap_icon = pygame.transform.scale(soap_icon, (settings.ICON_SIZE, settings.ICON_SIZE))
 
     def wash_step(self, screen, prog_entry):
         # wash time
