@@ -38,18 +38,18 @@ class Dashboard:
 
                 # xbox controller plugged in
                 if event.type == pygame.JOYDEVICEADDED:
-                    xbox = pygame.joystick.Joystick(event.device)
-                    xbox.init()
+                    xbox = pygame.joystick.Joystick(event.device_index)
                     joysticks[xbox.get_instance_id()] = xbox
                 # xbox controller unplugged
                 if event.type == pygame.JOYDEVICEREMOVED:
-                    del joysticks[event.instance_id()]
+                    joysticks.pop(event.instance_id, None)
 
                 if event.type == pygame.KEYDOWN:
                     self.panel.update_rect_index(event.key)
                 if self.panel.prog_bars[0] is not None:
                     print(f"checkmark: {self.panel.prog_bars[0].checkmark}; wash: {self.panel.prog_bars[0].washing}; done: {self.panel.prog_bars[0].finish}; paused: {self.panel.prog_bars[0].paused}")
 
+            print(joysticks)
             # fill the screen with a color to wipe away anything from last frame
             self.screen.fill(settings.GREY)
 
