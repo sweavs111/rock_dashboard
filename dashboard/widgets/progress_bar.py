@@ -13,7 +13,6 @@ class ProgressBar:
     def start_progress(self, screen, prog_bar, rect):
         # make a new rectangle for the progress bar
         prog_rect = rect.copy()
-
         current_time = timedelta(milliseconds=pygame.time.get_ticks())
 
         # calculate progress if not finished
@@ -30,12 +29,13 @@ class ProgressBar:
             pygame.draw.rect(screen, settings.BLUE, prog_rect, border_radius=20)
         else:
             pygame.draw.rect(screen, settings.GREEN, prog_rect, border_radius=20)
-            if not prog_bar.washing:
+            if not prog_bar.washing and not prog_bar.checkmark:
                 self._render_notification(screen, "START WASH?", rect)
+            elif not prog_bar.washing and prog_bar.checkmark:
+                self.symbols.wash_done(screen, prog_bar)
             else:
                 self._render_notification(screen, "WASHING...", rect)
                 self.symbols.wash_step(screen, prog_bar)
-
         if prog_bar.paused:
             prog_bar.current_pausetime = current_time - prog_bar.pause_tick
             self._render_notification(screen, "PAUSED", rect)

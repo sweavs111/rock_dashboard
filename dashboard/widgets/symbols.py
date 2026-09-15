@@ -18,6 +18,13 @@ class Symbols:
             sys.exit()
         self.soap_icon = pygame.transform.scale(soap_icon, (settings.ICON_SIZE, settings.ICON_SIZE))
 
+        try:
+            check_icon = pygame.image.load(os.path.join(ASSETS_DIR, "green_checkmark.png")).convert_alpha()
+        except pygame.error:
+            print("could not load image: make sure file path is correct.")
+            sys.exit()
+        self.check_icon = pygame.transform.scale(check_icon, (settings.ICON_SIZE, settings.ICON_SIZE))
+
     def wash_step(self, screen, prog_entry):
         # wash time
         current_time = timedelta(milliseconds=pygame.time.get_ticks())
@@ -35,7 +42,11 @@ class Symbols:
     
         screen.blit(wash_text, wash_text_rect)
 
-    
+    def wash_done(self, screen, prog_entry):
+        check_icon_rect = self.check_icon.get_rect()
+        check_icon_rect.midleft = (prog_entry.rect.right + 15, prog_entry.rect.centery)
+        screen.blit(self.check_icon, check_icon_rect)
+        
     def _format_timestr(self, wash_elapsed):
         total_seconds = int(wash_elapsed.total_seconds())
         hours, remainder = divmod(total_seconds, 3600)

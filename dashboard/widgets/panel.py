@@ -25,6 +25,7 @@ class ProgressEntry:
     finish: bool = False
     washing: bool = False
     wash_start = timedelta
+    checkmark: bool = False
 
 class Panel:
     def __init__(self):
@@ -151,9 +152,13 @@ class Panel:
                     self.prog_bars[self.rect_index].current_pausetime = timedelta(0)
                     self.prog_bars[self.rect_index].pause_tick = None
                     self.prog_bars[self.rect_index].paused = False
-                elif self.prog_bars[self.rect_index].finish:
+                elif self.prog_bars[self.rect_index].finish and not self.prog_bars[self.rect_index].washing: # if the stage has finished start wash
                     self.prog_bars[self.rect_index].washing = True
+                    self.prog_bars[self.rect_index].checkmark = False
                     self.prog_bars[self.rect_index].wash_start = timedelta(milliseconds=pygame.time.get_ticks())
+                elif self.prog_bars[self.rect_index].finish and self.prog_bars[self.rect_index].washing: # end the wash
+                    self.prog_bars[self.rect_index].checkmark = True
+                    self.prog_bars[self.rect_index].washing = False
             case pygame.K_BACKSPACE:
                 self.prog_bars[self.rect_index] = None
 
