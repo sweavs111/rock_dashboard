@@ -17,3 +17,6 @@ RED = "#941A18"
 # Progress bar config
 TOTAL_DURATION = timedelta(seconds=5)
 #TOTAL_DURATION = timedelta(minutes=2)
+
+# controller stick options
+PUSH_THRESHOLD = 0.5
