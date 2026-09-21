@@ -1,6 +1,7 @@
 # core pygame loop
 import pygame
 import sys
+from datetime import timedelta
 
 from . import settings
 from .widgets import panel, progress_bar

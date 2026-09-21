@@ -26,6 +26,7 @@ class ProgressEntry:
     washing: bool = False
     wash_start = timedelta
     checkmark: bool = False
+    washtime_save: timedelta = timedelta(0)
 
 class Panel:
     def __init__(self):
@@ -115,6 +116,7 @@ class Panel:
         screen.blits(self.header)
 
     def update_rect_index(self, keystroke_event):
+        self.current_time = timedelta(milliseconds=pygame.time.get_ticks())
         match keystroke_event:
             case pygame.K_LEFT:
                 if self.rect_index % 2 == 0: # if even
@@ -155,10 +157,13 @@ class Panel:
                 elif self.prog_bars[self.rect_index].finish and not self.prog_bars[self.rect_index].washing: # if the stage has finished start wash
                     self.prog_bars[self.rect_index].washing = True
                     self.prog_bars[self.rect_index].checkmark = False
+                    self.prog_bars[self.rect_index].current_pausetime = timedelta(0)
+                    self.prog_bars[self.rect_index].total_pausetime = timedelta(0)
                     self.prog_bars[self.rect_index].wash_start = timedelta(milliseconds=pygame.time.get_ticks())
                 elif self.prog_bars[self.rect_index].finish and self.prog_bars[self.rect_index].washing: # end the wash
                     self.prog_bars[self.rect_index].checkmark = True
                     self.prog_bars[self.rect_index].washing = False
+                    self.prog_bars[self.rect_index].washtime_save += self.current_time - self.prog_bars[self.rect_index].wash_start
             case pygame.K_BACKSPACE:
                 self.prog_bars[self.rect_index] = None
 

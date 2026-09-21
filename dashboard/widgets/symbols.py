@@ -28,7 +28,7 @@ class Symbols:
     def wash_step(self, screen, prog_entry):
         # wash time
         current_time = timedelta(milliseconds=pygame.time.get_ticks())
-        wash_elapsed = current_time - prog_entry.wash_start
+        wash_elapsed = (current_time - prog_entry.wash_start) + prog_entry.washtime_save
         wash_text = self.font.render(self._format_timestr(wash_elapsed), True, settings.WHITE)
         wash_text_rect = wash_text.get_rect()
         wash_text_rect.topleft = (prog_entry.rect.right + 30, prog_entry.rect.bottom - (prog_entry.rect.height / 3))
